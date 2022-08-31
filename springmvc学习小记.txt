@@ -1,0 +1,16 @@
+快捷键：shift+enter换下一行
+ctrl+d复制上一行
+
+
+使用smart tomcat可以简化部署，避免自带使用自带tomcat时，若project settings中artifacts中的web application archive&exploded没有导入，或web application exploded
+中的lib未导入导致访问jsp报404（若使用自带插件则需要删除原有web application archive&exploded重新导入，先导入exploded再导入archive）
+
+
+统一配置所有项目的maven:
+File->New Projects Setup->Setting for New Projects->搜索maven，修改maven home 
+path为自带的，users setting file中选择maven文件中的conf->setting.xml/C盘.m2下的
+setting.xml,local repostory选择提前创建好的文件夹
+
+
+
+配置mapper文件时如UserMapper时，把变量粘贴到本页面的注释中，能cv则不手写

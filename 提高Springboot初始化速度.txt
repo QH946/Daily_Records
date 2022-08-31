@@ -1,0 +1,7 @@
+
+## idea Spring Boot项目初始化（Spring Initializr）修改server url
+提高启动速度/解决原始网站无法使用
+
+https://start.springboot.io/
+
+https://start.aliyun.com

@@ -1,0 +1,95 @@
+## 牛客网刷题小记
+
+1.查询语句执行顺序
+（8）Select
+（9）distinct 字段名1,字段名2，
+（6）[fun(字段名)]  
+（1）from 表1
+（3）<join类型>join 表2 
+（2）on <join条件> 
+（4）where <where条件> 
+（5）group by <字段> 
+（7）having <having条件> 
+（10）order by <排序字段> 
+（11）limit <起始偏移量,行数>
+2.使用聚合函数，则判断条件使用having
+where---过滤指定的行
+having--过滤分组，与group by连用
+返回订单数量总和不小于100:having sum(quantity)>= 100
+3.返回同一表中的字段及字段别名，group、order同时使用
+返回每个订单号（order_num）各有多少行数（order_lines），并按 order_lines对结果进行升序排序。
+SELECT 
+    order_num,
+    COUNT(order_num) order_lines
+FROM
+    OrderItems
+GROUP BY
+    order_num
+ORDER BY
+    order_lines;
+4.
+可以使用ORDER BY，GROUP BY和HAVING子句中的列别名来引用该列。
+不能在WHERE子句中使用列别名。原因是当MySQL评估求值WHERE子句时，SELECT子句中指定的列的值可能尚未确定。
+
+5.MYSQL中何时使用group by
+1）当聚合列和非聚合列出现在一起时必须使用group by,如:
+#emp为员工表,deptno为部门编号字段,sal为工资字段
+SELECT deptno,MAX(sal),AVG(sal) FROM emp
+GROUP BY deptno #按照部门分组
+
+当使用group by时,应使用非聚合列为分组依据.
+
+2）什么是聚合列
+聚合列是指根据需求算出结果的列,
+常使用的聚合列函数有
+count(求个数),
+sum(求合),
+max(求最大值),
+min(求最小值),
+avg(求平均数)
+
+#emp为员工表,sal为工资字段
+
+#求emp字段一共有几条数据
+select count(*) from emp
+#求员工工资总和
+select sum(sal) from emp
+#求员工最高工资
+select max(sal) from emp
+#求员工最低工资
+select min(sal) from emp
+#求员工平均 工资
+select avg(sal) from emp
+
+3）having条件查询
+当使用group by进行分组时,想要使用条件查询,必须使用having,而不是where
+
+#查询平均工资小于8000的部门
+#emp为员工表,deptno为部门编号字段,sal为工资字段
+select deptno, AVG(sal) from emp
+group by deptno #按部门分组
+having AVG(sal)<8000 #查询条件,类似where,但是group by中只能使用having
+将两个 SELECT 语句结合起来（一）#
+发表于 04-28 17:08
+结合多个select结果采用union或者union all，union会自动去除重复的元组(行);
+根据题意推断，拼接多个查询结果集时需要去重，因此采用union；
+需要以BNBG开头，所以需要用模糊查询；
+最后排序使用order by;
+
+6.
+union--连接表，对行操作。
+union--将两个表做行拼接，同时自动删除重复的行。
+union all---将两个表做行拼接，保留重复的行
+【问题】
+    将两个 SELECT 语句结合起来，以便从 OrderItems表中检索产品 id（prod_id）和 quantity。其中，一个 SELECT 语句过滤数量为 100 的行，另一个 SELECT 语句过滤 id 以 BNBG 开头的产品，最后按产品 id 对结果进行升序排序。
+    
+结合多个select结果采用union或者union all，union会自动去除重复的元组(行);
+根据题意推断，拼接多个查询结果集时需要去重，因此采用union；
+需要以BNBG开头，所以需要用模糊查询；
+最后排序使用order by;
+select *  from OrderItems where quantity=100
+union
+select * from OrderItems where prod_id like "BNBG%"
+order by prod_id;
+
+使用union组合查询时，只能使用一条order by字句，他必须位于最后一条select语句之后，因为对于结果集不存在对于一部分数据进行排序，而另一部分用另一种排序规则的情况。 

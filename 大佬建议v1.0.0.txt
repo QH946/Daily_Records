@@ -1,0 +1,7 @@
+1.首要刷题
+Leetcode 3题每天
+牛客一套  
+2.不断完善相同类型的项目（因为之前的业务逻辑熟悉，且可不断巩固思维）
+完善CRM项目
+SSM->SpringBoot->SP+MP->vue->前后端分离->maven多模块
+->Spring Cloud(微服务)

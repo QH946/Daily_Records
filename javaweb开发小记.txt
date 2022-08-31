@@ -1,0 +1,52 @@
+1.设置断点，打上断点逐步debug（Console上的step over），以便后期运行查看前后端交互的数据，并在前端
+每一步或几步操作后同步观察控制台的数据反馈
+2.防止乱码
+post请求方式时，必须在所有的获取参数动作之前设置编码
+request.setCharacterEncoding("UTF-8");
+idea ->setting 中修改File Encodings以及Console都设置为UTF-8，idea->help-Edit_Custom_VMoptions中添加
+-Dfile.encoding=UTF-8（为防止Tomcat控制台以及日志乱码）
+3.idea全局查找字段的快捷键**Ctrl+Shift+F**
+4.关于maven 
+idea-->Project Settings --> Libraries --> Sources、JavaDocs路径出现红色字体
+Classes
+Classes中的jar，是程序在运行项目的时候使用的，因为这个是直接编译好的class文件，可以直接被虚拟机运行的。
+
+Sources
+Sources中的jar，就是给开发人员看的，自己在学习和debug的时候，可以看到jar包里面的各种注释说明，方便学习。
+
+JavaDocs
+JavaDocs中的jar，与Sources的jar一个道理，起到辅助的作用。
+解决方案：找到url是红色的相关依赖项，在右上侧的maven中右键Download Sources and Documentation
+5.配置web.xml时，<pattern>模块中要+/再+类名
+6.连续两次shift为idea全局搜索，ctrl+F12为查看当前类中的所有成员：方法、属性、内部类，
+直接显示所有成员的列表，支持搜索功能快速定位到某个成员的位置上；ctrl+shift+/ 为选中区域全部注释
+7.使用注解的方式简化代替xml文件  
+8.拦截器执行顺序：若用注解则按照全类名的先后顺序，若按照xml文件则按照xml配置中的先后顺序
+9.使用的服务如Mysql\Tomcat等在服务器启动方式调整为手动，并在每次使用前后使用net start/stop (mysqlxx)
+(Tomcat9)等语句进行开关，防止影响开机以及开机以后的资源占用。
+
+
+
+10.VUE
+npm remove -g @vue/cli
+npm remove -g cnpm --registry=https://registry.npm.taobao.org
+
+11.刷新DNS缓存
+cmd:ipconfig /flushdns
+12.
+
+
+1.Y7000P无法开启独显解决方案：
+退出电脑管家
+13.alt+shift多行选中，可效率更改变量名称等
+14.前端js等  crt+f5强制刷新页面
+15.先在maven引入junit依赖 之后@Test写在方法的上面；
+16.win+V调出粘贴板
+17.github 进入仓库页后按下T则进行文件搜索，按下L可指定到当前文件的某行；b键查看文件改动历史记录；
+按下句号“。”进入VS网页版；地址前缀输入gitpod.io/#/自动跳转网页VS且自动安装项目所需的相关依赖以及配置环境，
+网页提供的远程服务器可以使用（为所欲为）
+在搜索结果的左下角，进入Advanced search
+进行高级搜索，具体可查看官方文档
+18.win11自带截图
+（1）win+prtsc
+ (2)win+shift+S
