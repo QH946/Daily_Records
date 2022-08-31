@@ -1,0 +1,45 @@
+1.@SpringBootApplication(exclude={DataSourceAutoConfiguration.calss})
+
+DataSourceAutoConfiguration.class 会自动查找 application.yml 或者 properties 文件里的 spring.datasource.* 相关属性并自动配置单数据源
+
+DataSourceAutoConfiguration.class默认会帮我们自动配置单数据源，所以，如果想在项目中使用多数据源就需要排除它，手动指定多数据源。
+
+该注解的作用是，排除自动注入数据源的配置（取消数据库配置），在springBoot中使用多数据源时，加上@SpringBootApplication(exclude={DataSourceAutoConfiguration.calss})
+
+
+注意 单数据源 中 application.yml  为：
+
+spring:
+
+    datasource:
+
+      name: test
+
+      url: jdbc:mysql:/10.10.10.23:3306/est?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF8
+
+      username: test
+
+       password: test
+
+此时springBoot 中的注解应该是 @SpringBootApplication
+
+ 
+
+
+如果springBoot 中要加上 @SpringBootApplication(exclude={DataSourceAutoConfiguration.calss}) 
+
+ application.yml  为
+
+spring:
+
+    datasource:
+
+       default：
+
+             name: test
+
+             url: jdbc:mysql:/10.10.10.23:3306/est?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF8
+
+             username: test
+
+              password: test
