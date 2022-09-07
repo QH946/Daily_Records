@@ -1,0 +1,4 @@
+1.使用typora记录日常/学习/感悟内容，若文件过大可选择PDF等格式
+配合PDF-X-Edit、Pandoc可实现pdf转word，再转markdown
+(typora中的图片可设置存储到单独文件夹：偏好设置->图像)
+2.定期使用github桌面版上传，并同步导入gitte中

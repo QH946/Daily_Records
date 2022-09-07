@@ -1,5 +1,6 @@
 ## 牛客网刷题小记
 
+### MySQL
 1.查询语句执行顺序
 （8）Select
 （9）distinct 字段名1,字段名2，
@@ -93,3 +94,33 @@ select * from OrderItems where prod_id like "BNBG%"
 order by prod_id;
 
 使用union组合查询时，只能使用一条order by字句，他必须位于最后一条select语句之后，因为对于结果集不存在对于一部分数据进行排序，而另一部分用另一种排序规则的情况。 
+
+### java
+7.HttpServlet容器响应Web客户请求流程如下：
+1）Web客户向Servlet容器发出Http请求；
+
+2）Servlet容器解析Web客户的Http请求；
+
+3）Servlet容器创建一个HttpRequest对象，在这个对象中封装Http请求信息；
+
+4）Servlet容器创建一个HttpResponse对象；
+
+5）Servlet容器调用HttpServlet的service方法，这个方法中会根据request的Method来判断具体是执行doGet还是doPost，把HttpRequest和HttpResponse对象作为service方法的参数传给HttpServlet对象；
+
+6）HttpServlet调用HttpRequest的有关方法，获取HTTP请求信息；
+
+7）HttpServlet调用HttpResponse的有关方法，生成响应数据；
+
+8）Servlet容器把HttpServlet的响应结果传给Web客户。
+
+1.try块中放置可能引发异常的代码 故不可被省略
+2.Jdk1.7中新增了多个catch块的功能，用以捕获多异常， 捕获顺序为先小后大
+3.finally块用作回收无法被JVM回收的物理资源 例如数据库链接 网络链接等 Jdk1.7中虽增强了try()的功能，使得其中的代码在程序执行完毕后自动关闭代码 相当与隐含finally块
+4.catch块用作捕获异常
+总结
+异常处理语法结构中只有try块是必须的，但不能只有try块，1.7中的增强try除外 因为其中的try()已经隐含了finally了 
+通常一个类实现序列化方式是实现序列化接口 Serializable
+
+序列化的作用：把数据长久的保存在磁盘中，磁盘和内存是不同的，内存一般在程序运行时占用，数据保存周期短，随程序结束而结束，磁盘可以长久保存数据
+
+transient关键字的作用，在已实现序列化的类中，有的变量不需要保存在磁盘中，就要transient关键字修饰，如银行卡密码等，就这个作用------在已序列化的类中使变量不序列化
