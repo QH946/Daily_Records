@@ -1,3 +1,54 @@
 1.改名瑞吉外卖为如意外卖Ruyi_Takeaway
 2.外卖课周一到五每天两小时，周末各四小时起步（跟着敲几节后自己实现后端）
 若有精力，则额外肝一小时vue
+
+2.如果是使用MybatisPlus代码生成器的小伙伴注意一下记得在实体类里面加上@TableField(fill = FieldFill.INSERT)
+和@TableField(fill = FieldFill.INSERT_UPDATE)注解，不然实现后面的功能，打断点调试的时候
+自定义元数据对象处理器会起不了作用，无法自动填充导致数据库抛500异常
+
+
+3.引用面试
+今天面试，面试官针对我简历写了这个瑞吉【当然包装改了个名字】，
+问如果只剩下一道锅包肉，厨师不做了，这时候，张三点了份锅包肉，
+李四也点了份锅包肉，但是现在只剩下一份了，这种情况如何处理呢？
+如何保证数据的统一，不出现重复和负数
+
+最简单的实现方式就是利用MP的乐观锁配置。
+也可以采用redis的信号量来判断商品的库存量。
+使用乐观锁来处理。假设每次请求都能读到所有数据，然后使用乐观锁将version作为修改的条件，
+一个用户对数据进行修改后version就自增使得另外一个用户要进行修改时version不一致修改不了
+
+4.
+@RestController = @ResponseBody ＋ @Controller  合在一起的作用。
+如果只是使用@RestController注解Controller，则Controller中的方法无法返回jsp页面或者html，配置的视图解析器 
+InternalResourceViewResolver不起作用，返回的内容就是Return 里的内容。
+若前端发送json型数据，后端接收时，需要在方法参数前加入@RequestBody注解
+public R<Employee> login(HttpServletRequest request, @RequestBody Employee employee)
+
+
+5.
+SpringBoot 分为四层：controller层、service层、dao层、model(entity)层
+
+controller层：控制层，存放各种控制器，来提供数据或者返回界面，实现对Get和Post的相应，用于前后端交互，service层和前端通过Controller层进行数据交互。导入service层，调用service方法，controller通过接收前端传过来的参数进行业务操作，在返回一个指定的路径或者数据表。表单等交互动作的处理，调到Service，将Service层的数据对象返回到视图层。
+
+service层：业务逻辑层，存放业务逻辑处理，返回数据给控制调用，一般用于调用dao层的接口，实现业务功能，不直接对数据库进行操作，有接口和接口实现类，提供controller层调用的方法，调用dao层访问数据库。
+
+dao层：mapper层，数据持久层，对数据库进行持久化操作，用于存放sql语句，存放返回数据json的格式样式，在SpringBoot中用注解来为每一个方法注入sql语句。他的方法是针对数据库操作的，基本用到的就是增删改查。它只是个接口，只有方法名字，具体实现在mapper.xml中。
+
+model(entity)层：数据访问层，实体类包，存放各种与数据库对应的实体类。属性值与数据库中的属性值保持一致。 实现set和get方法。
+
+为何分层？
+
+高内聚：分层的设计可以简化系统设计，让不同的层专注做某一模块的事
+低耦合：层与层之间通过接口或API来交互，依赖方不用知道被依赖方的细节
+复用：分层之后可以做到很高的复用
+扩展性：分层架构可以让我们更容易做横向扩展
+分层是为了使业务逻辑更加清晰，写代码更加方便，所以有时候也需要根据具体情况来，但是大体的都是这样处理的，因为它其实就是提供一种规则，让你把相同类型的代码放在一起，这样就形成了层次，从而达到分层解耦、复用、便于测试和维护的目的。
+
+6.判断用GetMapping还是PostMapping
+前端F12，根据Request Method后面的内容决定
+
+7.开发具体业务前，再log前打断点debug
+log.info("page = {},pageSize = {},name = {}", page, pageSize, name);
+判断能否正常接收到自定义方法中的参数
+public R<Page> page(int page, int pageSize, String name)
