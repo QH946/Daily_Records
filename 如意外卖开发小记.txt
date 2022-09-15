@@ -52,3 +52,54 @@ model(entity)层：数据访问层，实体类包，存放各种与数据库对�
 log.info("page = {},pageSize = {},name = {}", page, pageSize, name);
 判断能否正常接收到自定义方法中的参数
 public R<Page> page(int page, int pageSize, String name)
+
+8.
+10年客户端开发程序员给各位同学一些建议吧，这组视频，老师的处理方式是对的，但是，只是一个课件和课程，方便大家了解后段开发流程，我有如下心得和建议给正在学习的学弟们：
+1.学习的过程中思考如果这里有1000个请求甚至更多这样处理合理吗？
+2.如果这里逻辑更复杂，条件更多，该如何处理或者优化？
+3.这样处理后相应时间是增加了还是减少了，如果，要让请求响应变快，如何优化？
+4.spring框架很强大，那它内部如何实现这么高级的功能？
+5.如果自己要实现一个框架，该如何？
+6.JAVA 受这么多人青睐，它强大在哪里？我们需要用其他语言替换吗？为什么？
+7.夯实计算机基础，数据结构与算法。
+
+9.
+@Select注解的目的是为了取代xml中的select标签，只作用于方法上面。下面看一下@Select注解的源码介绍：
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Select
+{
+    String[] value();
+}
+
+从上述可以看到两点信息：
+
+（1）@Select注解只能修饰方法
+（2）@Select注解的值是字符数组。
+
+所以，@Select注解的用法是这样的：
+
+@Select({ "select * from xxx", "select * from yyy" })
+Person selectPersonById(Integer id);
+
+虽然@Select注解的值是字符数组，但是真正生效的应该是最后那条SQL语句。这一点请大家要留意一下。
+
+2、@Select注解动态SQL拼写
+普通的字符串值，只能实现变量的替换功能，如下所示，
+
+@Select("select * from t_person where id = #{id}")
+Person selectPersonById(Integer id);
+
+如果要想实现复杂的逻辑判断，则需要使用标签，如下所示：
+
+@Select("<script> select * from t_person where id = #{id} 
+<when test='address !=null'> and address = #{address} 
+</when> </script>")
+Person selectPersonById(Integer id);
+其实，标签并非是@Select注解专用的，其他的注解，例如@Insert，@Update等等，都可以使用的。
+
+10.service层中，
+//查询菜品基本信息，从dish表查询
+        Dish dish = this.getById(id);
+ this.getById(id);等价于DishService.getById(id);       
