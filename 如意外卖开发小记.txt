@@ -102,4 +102,29 @@ Person selectPersonById(Integer id);
 10.service层中，
 //查询菜品基本信息，从dish表查询
         Dish dish = this.getById(id);
- this.getById(id);等价于DishService.getById(id);       
+ this.getById(id);等价于DishService.getById(id);   
+ 
+11.@SuppressWarnings 一部分是给编译器提供元信息, 抑制部分特殊警告; 还有的是IDE扩展的很多检查规则.
+
+不建议 @SuppressWarnings("all")
+12.interface 中方法默认就是 public 的, 变量默认 public static final
+如套餐service中
+ /**
+     * 新增套餐并保存套餐与菜品的关联关系
+     *
+     * @param setmealDto
+     */
+     void saveWithDish(SetmealDto setmealDto);
+
+    /**
+     * 删除套餐，同时需要删除套餐和菜品的关联数据
+     *
+     * @param ids
+     */
+     void removeWithDish(List<Long> ids);
+无需再带public
+     
+13.idea快捷键补充
+ctrl+D复制上一行
+ctrl+Y删除当前行
+shift+enter按当前缩进换行
