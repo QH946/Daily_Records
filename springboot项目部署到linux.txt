@@ -1,0 +1,55 @@
+部署springboot项目到Linux
+测试前先在防护墙中将端口开放
+为保证未来测试环境，将虚拟机修改为静态ip
+方式一：
+1.使用windows环境下idea中maven自带的插件
+clean->package
+2.将jar报上传至Linux指定目录下
+3.在指定目录下后台启动项目并输出日志
+nohup java -jar helloworld-1.0-SNAPSHOT.jar &> helloworld.log &
+4.widnows浏览器测试访问
+方式二：
+1.在Linux下配置好jdk、maven、git等（可使用yum list、yum install
+或手动配置环境变量
+注:maven修改阿里镜像及配置本地库）
+2.使用shell脚本
+
+#!/bin/sh
+echo =================================
+echo  自动化部署脚本启动
+echo =================================
+
+echo 停止原来运行中的工程
+APP_NAME=helloworld
+
+tpid=`ps -ef|grep $APP_NAME|grep -v grep|grep -v kill|awk '{print $2}'`
+if [ ${tpid} ]; then
+    echo 'Stop Process...'
+    kill -15 $tpid
+fi
+sleep 2
+tpid=`ps -ef|grep $APP_NAME|grep -v grep|grep -v kill|awk '{print $2}'`
+if [ ${tpid} ]; then
+    echo 'Kill Process!'
+    kill -9 $tpid
+else
+    echo 'Stop Success!'
+fi
+
+echo 准备从Git仓库拉取最新代码
+cd /usr/local/helloworld
+
+echo 开始从Git仓库拉取最新代码
+git pull
+echo 代码拉取完成
+
+echo 开始打包
+output=`mvn clean package -Dmaven.test.skip=true`
+
+cd target
+
+echo 启动项目
+nohup java -jar helloworld-1.0-SNAPSHOT.jar &> helloworld.log &
+echo 项目启动完成
+
+3.测试访问
