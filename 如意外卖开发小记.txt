@@ -144,3 +144,59 @@ shift+enter按当前缩进换行
 mysql的使用root
 mongodb的密码为mongo
 redis的密码为redis
+
+16.编程风格
+仅每个小模块（行为）间使用空行
+
+/**
+     * 根据条件查询对应的菜品数据
+     *
+     * @param dish
+     * @return
+     */
+    @GetMapping("/list")
+    public R<List<DishDto>> list(Dish dish) {
+        List<DishDto> dishDtoList = null;
+        //动态构造key-dish_1397844391040167938_1
+        String key = "dish_" + dish.getCategoryId() + "_" + dish.getStatus();
+        //先从dish中获取缓存数据
+        dishDtoList = (List<DishDto>) redisTemplate.opsForValue().get(key);
+        if (dishDtoList != null) {
+            //如果存在直接返回，无需查询数据库
+            return R.success(dishDtoList);
+        }
+
+        //构造查询条件
+        LambdaQueryWrapper<Dish> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        //添加条件，查询状态为1的（起售状态）
+        lambdaQueryWrapper.eq(Dish::getStatus, 1);
+        lambdaQueryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+        //条件排序条件
+        lambdaQueryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+        List<Dish> list = dishService.list(lambdaQueryWrapper);
+
+        dishDtoList = list.stream().map((item) -> {
+            DishDto dishDto = new DishDto();
+            BeanUtils.copyProperties(item, dishDto);
+            Long categoryId = item.getCategoryId();
+            //根据id查分类对象
+            Category category = categoryService.getById(categoryId);
+            if (category != null) {
+                String categoryName = category.getName();
+                dishDto.setCategoryName(categoryName);
+            }
+            //当前菜品id
+            Long dishId = item.getId();
+            LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(DishFlavor::getDishId, dishId);
+            //SQL: select* from dishflavor where dish_id=?;
+            List<DishFlavor> dishFlavorlist = dishFlavorService.list(queryWrapper);
+            dishDto.setFlavors(dishFlavorlist);
+            return dishDto;
+        }).collect(Collectors.toList());
+
+        //如果不存在，需要查询数据库，将查询到的菜品数据缓存到Redis
+        redisTemplate.opsForValue().set(key, dishDtoList, 60, TimeUnit.MINUTES);
+
+        return R.success(dishDtoList);
+    }
