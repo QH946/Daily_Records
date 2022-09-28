@@ -200,3 +200,30 @@ redis的密码为redis
 
         return R.success(dishDtoList);
     }
+    
+17.规范
+冰凝 19:06:19
+你写完就会发现IDEA应该会有个警告: 泛型类的原始使用 这类的
+
+冰凝 19:07:15
+如果不写, 相当于 R<Object>,  API文档工具也没法给你出响应结构文档
+
+冰凝 19:07:27
+如果实在懒得写, 建议 R<?>
+ /**
+     * 根据id查询地址
+     */
+    @ApiOperation("获取地址列表")
+    @GetMapping("/{id}")
+    public R<?> get(@PathVariable Long id) {
+        AddressBook addressBook = addressBookService.getById(id);
+        if (addressBook != null) {
+            return R.success(addressBook);
+        } else {
+            return R.error("没有找到该对象");
+        }
+    }
+18.多任务视图：alt+tab
+19.快速修改配置文件
+win+R后输入文件路径
+如D:/hadoop/hbase-1.2.6/conf/hbase-site.xml
