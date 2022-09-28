@@ -227,3 +227,17 @@ redis的密码为redis
 19.快速修改配置文件
 win+R后输入文件路径
 如D:/hadoop/hbase-1.2.6/conf/hbase-site.xml
+20.安装软件时，尽量避免安装路径带有空格及中文
+如系统自带的文件夹
+D:\Program Files
+D:\Program Files (x86)
+自己创建
+D:\Softwares
+D:\Tools
+D:\Test
+D:\Practice
+D:\Note
+D:\Frame
+D:\Family
+
+
