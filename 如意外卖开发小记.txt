@@ -266,3 +266,8 @@ ctrl+alt按住
 可标记未开发的代码块
 23.
 批量选中sql文件-》右键run....->选择目标数据库
+24.
+ctrl+e寻找最近文件
+25.
+SpringBoot项目初始化时，添加spring configurarion processor
+可实现yml文件配置提示
