@@ -1,0 +1,42 @@
+## Centos下常用卸载
+
+### 以ngnix为例
+先查看进程  
+ps -ef |grep nginx
+kill nginx进程，nginx目录下：
+cd /usr/local/nginx/sbin  
+./nginx -s stop
+全局查找与nginx相关的文件   
+find  /  -name  nginx*
+删除所有文件   
+sudo rm -rf file
+
+卸载nginx依赖
+yum remove nginx
+
+
+以yum安装则
+（1）查看nginx服务情况
+ 
+ ps -ef | grep nginx
+
+（2）关闭服务
+ 
+systemctl stop nginx
+
+2、如果服务加入了自启动，则删除服务
+
+chkconfig nginx  off
+
+3、删除nginx文件
+
+1）使用find命令搜索文件
+
+find / -name nginx
+（2）按照返回删除目录
+   
+rm -rf 文件
+
+4、如果使用yum按照的则使用命令删除依赖
+
+yum -y remove nginx

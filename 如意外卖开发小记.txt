@@ -223,7 +223,8 @@ redis的密码为redis
             return R.error("没有找到该对象");
         }
     }
-18.多任务视图：alt+tab
+18.多任务视图：alt+tab   ＋方向键可随意切换（
+实测比鼠标效率高，且预防鼠标手）
 19.快速修改配置文件
 win+R后输入文件路径
 如D:/hadoop/hbase-1.2.6/conf/hbase-site.xml
